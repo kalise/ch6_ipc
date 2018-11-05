@@ -32,7 +32,7 @@ If you need to run processes that communicate with shared memory in different co
 
 First, remove the old consumer
 
-    $ docker rm -fv consumer
+    $ docker rm -f consumer
 
 and create the consumer using the same IPC namespace of the producer
 
@@ -40,5 +40,19 @@ and create the consumer using the same IPC namespace of the producer
 
 The ``--ipc`` flag will create the consumer container in the same IPC namespace as the producer container.
 
+By checking the logs, we can see now the two containers talking each other through the same shared memory
 
-
+    $ docker logs producer
+    ...
+    Produced: cb
+    Produced: 7c
+    Produced: f6
+    
+    $ docker logs consumer
+    ...
+    Consumed: cb
+    Consumed: 7c
+    Consumed: f6
+    Consumed: done
+    
+That's all.
